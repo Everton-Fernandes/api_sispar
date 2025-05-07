@@ -10,7 +10,7 @@ class Reembolso(db.Model):
     empresa = Column(String(50), nullable=False)
     num_prestacao = Column(Integer, nullable=False)
     descricao = Column(String(255))
-    data = Column(Date, nullable=False, server_default=func.current_date())
+    data = Column(Date, nullable=False, server_default=func.now())
     tipo_reembolso = Column(String(30), nullable=False)
     centro_custo = Column(String(100), nullable=False)
     ordem_interna = Column(String(25))
