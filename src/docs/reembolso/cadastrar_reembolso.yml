@@ -1,0 +1,89 @@
+tags:
+  - Reembolso # define a categoria Reembolso
+description: |
+  Cadastra um novo reembolso no sistema.
+parameters:
+  - in: body # indica que o parametro veio do corpo da requisicao
+    name: corpo # nome do parametro
+    required: true # indica se o parametro e obrigatorio ou nao
+    schema: # define o tipo de dado do parametro
+      type: object # tipo de dado objeto
+      properties: # propriedades do objeto
+        colaborador:
+          type: string # tipo da propriedade
+          example: José dos santos # exemplo de valor para a propriedade
+        empresa:
+          type: string
+          example: Empresa XYZ
+        num_prestacao:
+          type: integer
+          example: 1
+        descricao:
+          type: string
+          example: Reembolso de viagem
+        data:
+          type: string
+          format: date # formato da data
+          example: 01-01-2025
+        tipo_reembolso:
+          type: string
+          example: Viagem
+        centro_custo:
+          type: string
+          example: Centro de Custo 1
+        ordem_interna:
+          type: string
+          example: Ordem Interna 1
+        divisao:
+          type: string
+          example: Divisão 1
+        pep:
+          type: string
+          example: PEP 1
+        moeda:
+          type: string
+          example: BRL
+        distancia_km:
+          type: number
+          example: 100.0
+        valor_km:
+          type: number
+          example: 0.5
+        valor_faturado:
+          type: number
+          example: 50.0
+        despesa:
+          type: number
+          example: 1154.15
+        status:
+          type: string
+          example: Em análise
+          default: Em análise
+      required: # indica se o parametro e obrigatorio ou nao
+        - colaborador
+        - empresa
+        - num_prestacao
+        - data
+        - tipo_reembolso
+        - centro_custo
+        - moeda
+        - valor_faturado
+        - status
+
+responses: # respostas da requisicao
+  201: # codigo de resposta
+    description: Reembolso cadastrado com sucesso.
+    schema:
+      type: object # tipo de dado objeto
+      properties:
+        message:
+          type: string # tipo da propriedade
+          example: Reembolso cadastrado com sucesso. # exemplo de valor para a propriedade
+  400: # codigo de resposta
+    description: Erro ao cadastrar reembolso. # descricao da resposta
+    schema:
+      type: object # tipo de dado objeto
+      properties:
+        message:
+          type: string # tipo da propriedade
+          example: Erro ao cadastrar reembolso. # exemplo de valor para a propriedade

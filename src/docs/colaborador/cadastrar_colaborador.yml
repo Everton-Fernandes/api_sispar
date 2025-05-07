@@ -1,0 +1,50 @@
+tags:
+  - Colaborador #defirni a categoria Colaborador
+description: |
+  Cadastra um novo colaborador no sistema.
+parameters:
+  - in: body # indica q o parametro veio do corpo da requisicao
+    name: corpo # nome do parametro
+    required: true # indica se o parametro e obrigatorio ou nao
+    schema: # define o tipo de dado do parametro
+      type: object # tipo de dado objeto
+      properties: # propriedades do objeto
+        nome: # nome da propriedade
+          type: string # tipo da propriedade
+          example: teste nome # exemplo de valor para a propriedade
+        email: # nome da propriedade
+          type: string # tipo da propriedade
+          example: email@email.com # exemplo de valor para a propriedade
+        senha: # nome da propriedade
+          type: string # tipo da propriedade
+          example: senha123 # exemplo de valor para a propriedade
+        cargo: # nome da propriedade
+          type: string # tipo da propriedade
+          example: desenvolvedor # exemplo de valor para a propriedade
+        salario: # nome da propriedade
+          type: number # tipo da propriedade
+          example: 5000.00 # exemplo de valor para a propriedade
+      required: # indica se o parametro e obrigatorio ou nao
+        - nome
+        - email
+        - senha
+        - cargo
+        - salario
+
+responses: # respostas da requisicao
+  201: # codigo de resposta
+    description: Colaborador cadastrado com sucesso.
+    schema:
+      type: object # tipo de dado objeto
+      properties:
+        message:
+          type: string # tipo da propriedade
+          example: Colaborador cadastrado com sucesso. # exemplo de valor para a propriedade
+  400: # codigo de resposta
+    description: Erro ao cadastrar colaborador. # descricao da resposta
+    schema:
+      type: object # tipo de dado objeto
+      properties:
+        message:
+          type: string # tipo da propriedade
+          example: Erro ao cadastrar colaborador. # exemplo de valor para a propriedade
