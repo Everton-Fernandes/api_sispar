@@ -2,8 +2,8 @@ from flask import Flask
 from src.controller.colaborador_controller import bp_colaborador
 from src.model import db
 from config import Config
-from flask_cors import CORS
-from flasgger import Swagger
+from flask_cors import CORS  # type: ignore
+from flasgger import Swagger  # type: ignore
 
 swagger_config = {
     "headers": [],  # cabeçalhos da requisição

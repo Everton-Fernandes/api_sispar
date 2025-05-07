@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify
 from src.model.colaborador_model import Colaborador
 from src.model import db
 from src.security.security import hash_senha, checar_senha
-from flasgger import swag_from
+from flasgger import swag_from  # type: ignore
 
 # request -> trabalha com as requisições. Pega o conteúdo da requisição
 # jsonify -> Trabalha com as respostas. Converte um dado em Json
@@ -48,7 +48,7 @@ def atualizar_dados_do_colaborador(id_colaborador):
 
     dados_requisicao = request.get_json()
 
-    for colaborador in dados:
+    for colaborador in dados_requisicao:
         if colaborador["id"] == id_colaborador:
             colaborador_encontrado = colaborador
             break

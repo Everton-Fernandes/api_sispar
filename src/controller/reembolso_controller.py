@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from src.model.reembolso_model import Reembolso
 from src.model import db
-from flasgger import swag_from
+from flasgger import swag_from  # type: ignore
 
 bp_reembolso = Blueprint("reembolso", __name__, url_prefix="/reembolso")
 
