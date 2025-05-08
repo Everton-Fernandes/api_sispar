@@ -1,0 +1,48 @@
+tags:
+  - Colaborador
+
+summary: Realiza login do colaborador
+description: Verifica se as credenciais do colaborador (email e senha) estão corretas e retorna mensagem de sucesso ou erro.
+operationId: loginColaborador
+parameters:
+  - in: body
+    name: corpo
+    required: true
+    description: Dados de login do colaborador
+    schema:
+      type: object
+      properties:
+        email:
+          type: string
+          example: email@email.com
+        senha:
+          type: string
+          example: senha123
+      required:
+        - email
+        - senha
+
+responses:
+  "200":
+    description: Login realizado com sucesso
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            mensagem:
+              type: string
+              example: Login realizado com sucesso
+  "400":
+    description: Dados inválidos ou incompletos
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            mensagem:
+              type: string
+              example: Email ou senha inválidos
+  "404":
+    description: Colaborador não encontrado
+    content: applicat
