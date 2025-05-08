@@ -13,6 +13,22 @@ def pegar_dados_todos_reembolsos():
     return jsonify(reembolsos), 200
 
 
+@bp_reembolso.route("/<int:num_prestacao>", methods=["GET"])
+def pegar_dados_reembolso_por_num_prestacao(num_prestacao):
+    reembolso = (
+        db.session.execute(
+            db.select(Reembolso).where(Reembolso.num_prestacao == num_prestacao)
+        )
+        .scalars()
+        .all()
+    )
+    if reembolso:
+        return jsonify([r.all_data() for r in reembolso]), 200
+
+    else:
+        return jsonify({"mensagem": "Reembolso não encontrado"}), 404
+
+
 @bp_reembolso.route("/cadastrar", methods=["POST"])
 @swag_from("../docs/reembolso/cadastrar_reembolso.yml")
 def cadastrar_novo_reembolso():
