@@ -7,6 +7,7 @@ bp_reembolso = Blueprint("reembolso", __name__, url_prefix="/reembolso")
 
 
 @bp_reembolso.route("/todos-reembolsos")
+@swag_from("../docs/reembolso/pegar_dados_todos_reembolsos.yml")
 def pegar_dados_todos_reembolsos():
     reembolsos = db.session.execute(db.select(Reembolso)).scalars().all()
     reembolsos = [reembolso.all_data() for reembolso in reembolsos]
@@ -14,6 +15,7 @@ def pegar_dados_todos_reembolsos():
 
 
 @bp_reembolso.route("/<int:num_prestacao>", methods=["GET"])
+@swag_from("../docs/reembolso/pegar_dados_reembolso_por_num_prestacao.yml")
 def pegar_dados_reembolso_por_num_prestacao(num_prestacao):
     reembolso = (
         db.session.execute(
@@ -80,6 +82,7 @@ def atualizar_dados_do_reembolso(id_reembolso):
 
 
 @bp_reembolso.route("/deletar/<int:id_reembolso>", methods=["DELETE"])
+@swag_from("../docs/reembolso/deletar_reembolso.yml")
 def deletar_reembolso(id_reembolso):
     reembolso = db.session.execute(
         db.select(Reembolso).where(Reembolso.id == id_reembolso)
