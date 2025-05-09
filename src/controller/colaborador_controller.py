@@ -3,6 +3,7 @@ from src.model.colaborador_model import Colaborador
 from src.model import db
 from src.security.security import hash_senha, checar_senha
 from flasgger import swag_from  # type: ignore
+from flasgger import swag_from  # type: ignore
 
 # request -> trabalha com as requisições. Pega o conteúdo da requisição
 # jsonify -> Trabalha com as respostas. Converte um dado em Json
@@ -11,6 +12,7 @@ bp_colaborador = Blueprint("colaborador", __name__, url_prefix="/colaborador")
 
 
 @bp_colaborador.route("/todos-colaboradores")
+@swag_from("../docs/colaborador/pegar_dados_todos_colaboradores.yml")
 def pegar_dados_todos_colaboradores():
 
     colaboradores = db.session.execute(db.select(Colaborador)).scalars().all()
@@ -44,26 +46,29 @@ def cadastrar_novo_colaborador():
 
 # Endereco/colaborador/atualizar/1
 @bp_colaborador.route("/atualizar/<int:id_colaborador>", methods=["PUT"])
+@swag_from("../docs/colaborador/atualizar_dados_do_colaborador.yml")
 def atualizar_dados_do_colaborador(id_colaborador):
-
     dados_requisicao = request.get_json()
 
-    for colaborador in dados_requisicao:
-        if colaborador["id"] == id_colaborador:
-            colaborador_encontrado = colaborador
-            break
+    colaborador = db.session.get(Colaborador, id_colaborador)
+    if not colaborador:
+        return jsonify({"mensagem": "Colaborador não encontrado"}), 404
 
     if "nome" in dados_requisicao:
-        colaborador_encontrado["nome"] = dados_requisicao["nome"]
+        colaborador.nome = dados_requisicao["nome"]
     if "cargo" in dados_requisicao:
-        colaborador_encontrado["cargo"] = dados_requisicao["cargo"]
+        colaborador.cargo = dados_requisicao["cargo"]
+    if "salario" in dados_requisicao:
+        colaborador.salario = dados_requisicao["salario"]
+
+    db.session.commit()
 
     return jsonify({"mensagem": "Dados do colaborador atualizados com sucesso"}), 200
 
 
 @bp_colaborador.route("/login", methods=["POST"])
+@swag_from("../docs/colaborador/login.yml")
 def login():
-
     dados_requisicao = request.get_json()
 
     email = dados_requisicao.get("email")
@@ -72,27 +77,14 @@ def login():
     if not email or not senha:
         return jsonify({"mensagem": "Todos os dados precisam ser preenchidos"}), 400
 
-    # SELECT * FROM [TABELA]
     colaborador = db.session.execute(
         db.select(Colaborador).where(Colaborador.email == email)
-    ).scalar()  # -> A linha de informação OU None
-
-    print("*" * 100)
-    print(f"dado: {colaborador} é do tipo {type(colaborador)}")
-    print("*" * 100)
+    ).scalar()
 
     if not colaborador:
         return jsonify({"mensagem": "Usuario não encontrado"}), 404
 
-    colaborador = colaborador.to_dict()
-
-    print("*" * 100)
-    print(f"dado: {colaborador} é do tipo {type(colaborador)}")
-    print("*" * 100)
-
-    if email == colaborador.get("email") and checar_senha(
-        senha, colaborador.get("senha")
-    ):
+    if checar_senha(senha, colaborador.senha):
         return jsonify({"mensagem": "Login realizado com sucesso"}), 200
     else:
         return jsonify({"mensagem": "Credenciais invalidas"}), 400

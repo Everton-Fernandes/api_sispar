@@ -7,10 +7,28 @@ bp_reembolso = Blueprint("reembolso", __name__, url_prefix="/reembolso")
 
 
 @bp_reembolso.route("/todos-reembolsos")
+@swag_from("../docs/reembolso/pegar_dados_todos_reembolsos.yml")
 def pegar_dados_todos_reembolsos():
     reembolsos = db.session.execute(db.select(Reembolso)).scalars().all()
     reembolsos = [reembolso.all_data() for reembolso in reembolsos]
     return jsonify(reembolsos), 200
+
+
+@bp_reembolso.route("/<int:num_prestacao>", methods=["GET"])
+@swag_from("../docs/reembolso/pegar_dados_reembolso_por_num_prestacao.yml")
+def pegar_dados_reembolso_por_num_prestacao(num_prestacao):
+    reembolso = (
+        db.session.execute(
+            db.select(Reembolso).where(Reembolso.num_prestacao == num_prestacao)
+        )
+        .scalars()
+        .all()
+    )
+    if reembolso:
+        return jsonify([r.all_data() for r in reembolso]), 200
+
+    else:
+        return jsonify({"mensagem": "Reembolso não encontrado"}), 404
 
 
 @bp_reembolso.route("/cadastrar", methods=["POST"])
@@ -64,6 +82,7 @@ def atualizar_dados_do_reembolso(id_reembolso):
 
 
 @bp_reembolso.route("/deletar/<int:id_reembolso>", methods=["DELETE"])
+@swag_from("../docs/reembolso/deletar_reembolso.yml")
 def deletar_reembolso(id_reembolso):
     reembolso = db.session.execute(
         db.select(Reembolso).where(Reembolso.id == id_reembolso)
@@ -76,6 +95,3 @@ def deletar_reembolso(id_reembolso):
     db.session.commit()
 
     return jsonify({"mensagem": "Reembolso deletado com sucesso"}), 200
-
-
-# db.session.bulk_save_objects([reembolso])

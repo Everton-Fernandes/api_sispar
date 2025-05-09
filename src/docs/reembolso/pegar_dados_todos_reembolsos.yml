@@ -1,0 +1,65 @@
+tags:
+  - Reembolso
+description: |
+  Retorna os dados de reembolsos cadastrados no sistema.
+responses:
+  200:
+    description: Dados dos reembolsos retornados com sucesso
+    schema:
+      type: array
+      items:
+        type: object
+        properties:
+          colaborador:
+            type: string
+            example: João da Silva
+          empresa:
+            type: string
+            example: Empresa XYZ
+          num_prestacao:
+            type: integer
+            example: 1
+          descricao:
+            type: string
+            example: Reembolso de viagem
+          data:
+            type: string
+            format: date # formato da data
+            example: 2025-01-01
+          tipo_reembolso:
+            type: string
+            example: Viagem
+          centro_custo:
+            type: string
+            example: Centro de Custo 1
+          ordem_interna:
+            type: string
+            example: Ordem Interna 1
+          divisao:
+            type: string
+            example: Divisão 1
+          pep:
+            type: string
+            example: PEP 1
+          moeda:
+            type: string
+            example: BRL
+          distancia_km:
+            type: number
+            example: 100.0
+          valor_km:
+            type: number
+            example: 0.5
+          valor_faturado:
+            type: number
+            example: 50.0
+          despesa:
+            type: number
+            example: 1154.15
+          id_colaborador:
+            type: integer
+            example: 1
+          status:
+            type: string
+            example: Em análise
+            default: Em análise

@@ -1,0 +1,41 @@
+tags:
+  - Colaborador
+summary: Atualiza os dados de um colaborador
+description: Atualiza as informações de um colaborador existente com base no ID fornecido.
+parameters:
+  - name: id_colaborador
+    in: path
+    required: true
+    description: ID do colaborador a ser atualizado
+    type: integer
+  - in: body
+    name: corpo
+    required: false
+    description: Dados a serem atualizados
+    schema:
+      type: object
+      properties:
+        nome:
+          type: string
+          example: João da Silva
+        cargo:
+          type: string
+          example: Analista de Sistemas
+        salario:
+          type: number
+          example: 5000.00
+responses:
+  200:
+    description: Colaborador atualizado com sucesso
+    schema:
+      type: object
+      properties:
+        mensagem:
+          type: string
+          example: Dados atualizados com sucesso
+  400:
+    description: Requisição inválida (por exemplo, dados faltando ou mal formatados)
+  404:
+    description: Colaborador não encontrado
+  500:
+    description: Erro interno no servidor

@@ -24,7 +24,7 @@ parameters:
         data:
           type: string
           format: date # formato da data
-          example: 01-01-2025
+          example: 2025-01-01
         tipo_reembolso:
           type: string
           example: Viagem

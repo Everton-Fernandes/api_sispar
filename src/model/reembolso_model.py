@@ -10,7 +10,7 @@ class Reembolso(db.Model):
     empresa = Column(String(50), nullable=False)
     num_prestacao = Column(Integer, nullable=False)
     descricao = Column(String(255))
-    data = Column(Date, nullable=False, server_default=func.current_date())
+    data = Column(Date, nullable=False, server_default=func.now())
     tipo_reembolso = Column(String(30), nullable=False)
     centro_custo = Column(String(100), nullable=False)
     ordem_interna = Column(String(25))
@@ -81,6 +81,28 @@ class Reembolso(db.Model):
             "valor_km": self.valor_km,
             "valor_faturado": self.valor_faturado,
             "despesa": self.despesa,
+            "id_colaborador": self.id_colaborador,
+            "status": self.status,
+        }
+
+    def all_data(self):
+        return {
+            "id": self.id,
+            "colaborador": self.colaborador,
+            "empresa": self.empresa,
+            "num_prestacao": self.num_prestacao,
+            "descricao": self.descricao,
+            "data": str(self.data),  # cuidado para converter datetime.date em string
+            "tipo_reembolso": self.tipo_reembolso,
+            "centro_custo": self.centro_custo,
+            "ordem_interna": self.ordem_interna,
+            "divisao": self.divisao,
+            "pep": self.pep,
+            "moeda": self.moeda,
+            "distancia_km": self.distancia_km,
+            "valor_km": float(self.valor_km),
+            "valor_faturado": float(self.valor_faturado),
+            "despesa": float(self.despesa),
             "id_colaborador": self.id_colaborador,
             "status": self.status,
         }

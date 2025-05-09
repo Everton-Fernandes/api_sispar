@@ -17,7 +17,7 @@ class Colaborador(db.Model):
     #   nome VARCHAR(100)
     nome = Column(String(100))
     email = Column(String(100))
-    senha = Column(String(50))
+    senha = Column(String(100))
     cargo = Column(String(100))
     salario = Column(DECIMAL(10, 2))
 

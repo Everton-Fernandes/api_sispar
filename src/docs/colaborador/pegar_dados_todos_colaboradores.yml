@@ -1,0 +1,26 @@
+tags:
+  - Colaborador
+summary: Lista todos os colaboradores
+description: Retorna uma lista com todos os colaboradores cadastrados.
+responses:
+  200:
+    description: Lista de colaboradores retornada com sucesso
+    schema:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+            example: 1
+          nome:
+            type: string
+            example: João da Silva
+          email:
+            type: string
+            example: joao@email.com
+          cargo:
+            type: string
+            example: Desenvolvedor
+  500:
+    description: Erro interno no servidor
